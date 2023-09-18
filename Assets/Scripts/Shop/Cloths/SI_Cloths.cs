@@ -17,8 +17,8 @@ public class SI_Cloths : ScriptableObject
 
     public ClothTag MyTag;
     public string ClothName;
-    public float BuyingPrice;
-    public float SellingPrice;
+    public int BuyingPrice;
+    public int SellingPrice;
     public Sprite ClothSprite;
 
     public void Initialice(SI_Cloths _info)

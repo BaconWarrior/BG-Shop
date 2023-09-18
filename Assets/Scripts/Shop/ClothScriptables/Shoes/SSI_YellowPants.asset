@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SSI_YellowPants
   m_EditorClassIdentifier: 
   MyTag: 3
-  ClothName: YellowHood
+  ClothName: YellowPants
   BuyingPrice: 160
   SellingPrice: 60
-  ClothSprite: {fileID: 21300000, guid: f7e7bed775fff8347b9e53c67e20875f, type: 3}
+  ClothSprite: {fileID: 21300000, guid: 27fe921d9d4bdb24eb91cc1e96a04f02, type: 3}

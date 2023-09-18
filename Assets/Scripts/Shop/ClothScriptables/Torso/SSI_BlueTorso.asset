@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e3dfbbcffbd854fab41a276df10747, type: 3}
   m_Name: SSI_BlueTorso
   m_EditorClassIdentifier: 
-  MyTag: 1
-  ClothName: BlueHood
-  BuyingPrice: 100
-  SellingPrice: 50
-  ClothSprite: {fileID: 21300000, guid: ae2d3e3bacfacde4981510b116293dba, type: 3}
+  MyTag: 2
+  ClothName: BlueTorso
+  BuyingPrice: 180
+  SellingPrice: 90
+  ClothSprite: {fileID: 21300000, guid: 3d9056df586b6024fbc5b9fee2433eef, type: 3}

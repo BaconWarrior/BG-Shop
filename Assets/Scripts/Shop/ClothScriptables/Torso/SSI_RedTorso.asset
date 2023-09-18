@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8e3dfbbcffbd854fab41a276df10747, type: 3}
-  m_Name: SSI_BluePants
+  m_Name: SSI_RedTorso
   m_EditorClassIdentifier: 
-  MyTag: 3
-  ClothName: BluePants
-  BuyingPrice: 200
-  SellingPrice: 60
-  ClothSprite: {fileID: 21300000, guid: 4807dc8cba98f89409729f6aac2945a7, type: 3}
+  MyTag: 2
+  ClothName: RedTorso
+  BuyingPrice: 180
+  SellingPrice: 90
+  ClothSprite: {fileID: 21300000, guid: 215dd6c48c732d744aecd29e7fecbbfa, type: 3}

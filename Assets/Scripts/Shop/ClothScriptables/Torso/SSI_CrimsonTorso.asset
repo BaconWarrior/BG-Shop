@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyTag: 2
   ClothName: CrimsonTorso
-  BuyingPrice: 200
-  SellingPrice: 100
-  ClothSprite: {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
+  BuyingPrice: 300
+  SellingPrice: 160
+  ClothSprite: {fileID: 21300000, guid: 250530d3e9754ed418009e3d539275b3, type: 3}

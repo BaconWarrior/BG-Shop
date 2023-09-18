@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager _gameManager { get; set; }
+    public PlayerInventory playerInventory;
+    public PlayerController playerController;
 
     private void Awake()
     {
@@ -26,6 +28,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance
     {
         get => _gameManager;
+    }
+
+    public void GiveCloth()
+    {
+
     }
 
 }

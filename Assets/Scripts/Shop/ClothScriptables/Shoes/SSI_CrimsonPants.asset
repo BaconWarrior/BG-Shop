@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SSI_CrimsonPants
   m_EditorClassIdentifier: 
   MyTag: 3
-  ClothName: CrimsonHood
-  BuyingPrice: 200
-  SellingPrice: 100
-  ClothSprite: {fileID: 21300000, guid: 20eb058aea3c3a744bb5d47a1610550a, type: 3}
+  ClothName: CrimsonPants
+  BuyingPrice: 250
+  SellingPrice: 70
+  ClothSprite: {fileID: 21300000, guid: b1babcb6ce4ee78478abc5076a6d1b8d, type: 3}
