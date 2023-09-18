@@ -10,6 +10,8 @@ public class ClothInfoContainer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI clothName;
     [SerializeField] private TextMeshProUGUI clothPrice;
     [SerializeField] private SI_Cloths clothInfo;
+    [SerializeField] private AudioClip hoverSound;
+    [SerializeField] private GameObject selectionImage;
     public Button myButton;
     
     public SI_Cloths ReturnCloth()
@@ -17,9 +19,23 @@ public class ClothInfoContainer : MonoBehaviour
         return clothInfo;
     }
 
+    public void SelectionVisibility(bool _state)
+    {
+        selectionImage.SetActive(_state);
+    }
+
     public void SelfDestruction()
     {
         Destroy(this.gameObject);
+    }
+
+    public void PlayHoverSound()
+    {
+        GameManager.Instance.PlaySound(hoverSound);
+    }
+    public void PlayClickSound()
+    {
+        GameManager.Instance.PlayClickSound();
     }
 
     public void UpdateInfo(SI_Cloths _newInfo, bool _selling)

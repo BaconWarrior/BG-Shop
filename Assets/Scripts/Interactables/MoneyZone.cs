@@ -4,12 +4,26 @@ using UnityEngine;
 
 public class MoneyZone : MonoBehaviour
 {
-    private void OnTriggerStay2D(Collider2D collision)
+    [SerializeField] private AudioClip goldSound;
+    void GiveMoneyToPlayer()
     {
-        if(collision.transform.CompareTag("Player"))
+        GameManager.Instance.PlaySound(goldSound);
+        GameManager.Instance.playerInventory.GainMoney(100);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-                GameManager.Instance.playerInventory.GainMoney(100);
+            GameManager.Instance.playerController.OnAction.AddListener(GiveMoneyToPlayer);
         }
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            GameManager.Instance.playerController.OnAction.RemoveListener(GiveMoneyToPlayer);
+        }
+    }
+
 }

@@ -27,6 +27,9 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private Sprite defaultTorsoSprite;
     [SerializeField] private Sprite defaultPantsSprite;
 
+    [SerializeField] AudioClip dressSound;
+    [SerializeField] AudioClip undressSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,15 +43,6 @@ public class PlayerInventory : MonoBehaviour
         Mathf.Clamp(PlayerMoney += _amount, 0, 1000);
     }
     
-    public void OpenInventory()
-    {
-        myInventory.gameObject.SetActive(true);
-    }
-
-    public void CloseInventory()
-    {
-        myInventory.gameObject.SetActive(true);
-    }
 
     public void DressCloth()
     {
@@ -65,6 +59,29 @@ public class PlayerInventory : MonoBehaviour
                     pantsSprite.sprite = myInventory.currentSelectedItem.ReturnCloth().ClothSprite;
                 break;
         }
+        GameManager.Instance.PlaySound(dressSound);
+        myInventory.dresBtn.interactable = false;
+        myInventory.undressBtn.interactable = true;
+    }
+
+    public void UndressCloth()
+    {
+        if (myInventory.currentSelectedItem == null) return;
+        switch (myInventory.currentSelectedItem.ReturnCloth().MyTag)
+        {
+            case SI_Cloths.ClothTag.Head:
+                headSprite.sprite = defaultHeadSprite;
+                break;
+            case SI_Cloths.ClothTag.Torso:
+                torsoSprite.sprite = defaultTorsoSprite;
+                break;
+            case SI_Cloths.ClothTag.Pants:
+                pantsSprite.sprite = defaultPantsSprite;
+                break;
+        }
+        GameManager.Instance.PlaySound(undressSound);
+        myInventory.dresBtn.interactable = true;
+        myInventory.undressBtn.interactable = false;
     }
 
     public bool BuyCloth(SI_Cloths _newCloth)
@@ -80,6 +97,25 @@ public class PlayerInventory : MonoBehaviour
         }
         else
             return false;
+    }
+
+    public void EnableDressButtons()
+    {
+        bool canBeDress = true;
+        switch (myInventory.currentSelectedItem.ReturnCloth().MyTag)
+        {
+            case SI_Cloths.ClothTag.Head:
+                    canBeDress = headSprite.sprite == myInventory.currentSelectedItem.ReturnCloth().ClothSprite;
+                break;
+            case SI_Cloths.ClothTag.Torso:
+                    canBeDress = torsoSprite.sprite == myInventory.currentSelectedItem.ReturnCloth().ClothSprite;
+                break;
+            case SI_Cloths.ClothTag.Pants:
+                    canBeDress = pantsSprite.sprite == myInventory.currentSelectedItem.ReturnCloth().ClothSprite;
+                break;
+        }
+        myInventory.dresBtn.interactable = !canBeDress;
+        myInventory.undressBtn.interactable = canBeDress;
     }
 
     public SI_Cloths SellCloth()

@@ -9,21 +9,26 @@ public class ShoopManager : MonoBehaviour
     [SerializeField] private List<ClothInfoContainer> shopItemsBtns;
     [SerializeField] private GameObject shopUI;
     [SerializeField] private GameObject playerShopUI;
+    [SerializeField] private GameObject playerShopUIBack;
     [SerializeField] private GameObject dialogUI;
     [SerializeField] private GameObject clothPrefab;
+    [SerializeField] private Transform camFocus;
+
     [SerializeField] private Transform headMenu;
     [SerializeField] private TextMeshProUGUI sellingPriceText;
     [SerializeField] private Button sellingBtn;
+    [SerializeField] private AudioClip sellSound;
+    [SerializeField] private AudioClip buySound;
 
     [SerializeField] private ClothInfoContainer currentSelectedItem;
 
     void Start()
     {
         FillItemList();
-        Invoke("enablesell", 1);
+        Invoke(nameof(EnableSell), 1);
     }
 
-    void enablesell()
+    void EnableSell()
     {
         GameManager.Instance.playerInventory.ReturnInventory().sellBtn.onClick.AddListener(BuyFromPlayer);
     }
@@ -55,9 +60,13 @@ public class ShoopManager : MonoBehaviour
 
     public void SelectItem(ClothInfoContainer _selectedItem)
     {
+        if (currentSelectedItem != null)
+            currentSelectedItem.SelectionVisibility(false);
         currentSelectedItem = _selectedItem;
         sellingPriceText.text = _selectedItem.ReturnCloth().BuyingPrice.ToString();
         sellingBtn.interactable = true;
+        currentSelectedItem.SelectionVisibility(true);
+        GameManager.Instance.PlayClickSound();
     }
 
     public void SellSelectedItem()
@@ -65,6 +74,7 @@ public class ShoopManager : MonoBehaviour
         //if we Cant pay just give a sound Feedback
         if(!GameManager.Instance.playerInventory.BuyCloth(currentSelectedItem.ReturnCloth()))
         {
+            GameManager.Instance.PlayBadSound();
             return;
         }
         //Remove Purhcased Items from the menu
@@ -74,23 +84,29 @@ public class ShoopManager : MonoBehaviour
         //Disable buy button
         sellingPriceText.text = "---";
         sellingBtn.interactable = false;
+        GameManager.Instance.PlaySound(sellSound);
+        GameManager.Instance.playerController.PlayPayAnimation();
         SortClothList();
     }
 
     public void BuyFromPlayer()
     {
         AddItem(GameManager.Instance.playerInventory.SellCloth());
-        
+        GameManager.Instance.PlaySound(buySound);
+        GameManager.Instance.playerController.PlayPayAnimation();
     }
 
     public void OpenPlayerSellMenu()
     {
         currentSelectedItem = null;
         playerShopUI.SetActive(true);
+        playerShopUIBack.SetActive(true);
         shopUI.SetActive(false);
         dialogUI.SetActive(false);
         GameManager.Instance.playerInventory.ReturnInventory().sellBtn.gameObject.SetActive(true);
         GameManager.Instance.playerController.SetBussy(true);
+        GameManager.Instance.PlayClickSound();
+        GameManager.Instance.FocusObjective(camFocus, 6);
     }
 
     public void OpenShopMenu()
@@ -98,13 +114,17 @@ public class ShoopManager : MonoBehaviour
         currentSelectedItem = null;
         shopUI.SetActive(true);
         playerShopUI.SetActive(false);
+        playerShopUIBack.SetActive(false);
         dialogUI.SetActive(false);
+        GameManager.Instance.PlayClickSound();
         GameManager.Instance.playerController.SetBussy(true);
+        GameManager.Instance.FocusObjective(camFocus, 6);
     }
 
     public void CloseCurrentShopMenu()
     {
         playerShopUI.SetActive(false);
+        playerShopUIBack.SetActive(false);
         shopUI.SetActive(false);
         dialogUI.SetActive(true);
     }
@@ -127,7 +147,6 @@ public class ShoopManager : MonoBehaviour
                 tagToCompare = SI_Cloths.ClothTag.Null;
                 break;
         }
-        Debug.Log("Tag= " + tagToCompare);
         if(tagToCompare == SI_Cloths.ClothTag.Null)
         {
             for (int i = 0; i < shopItemsBtns.Count; i++)
@@ -140,6 +159,7 @@ public class ShoopManager : MonoBehaviour
         {
             shopItemsBtns[i].gameObject.SetActive(shopItemsBtns[i].CompareClothTag(tagToCompare));
         }
+        GameManager.Instance.PlayClickSound();
     }
 
     public void StartConversation()
